@@ -16,15 +16,17 @@ export default class Items extends Component {
   }
 
   setEvent() {
-    this.$target.querySelector('.addBtn').addEventListener('click', () => {
-      const { items } = this.$state;
-      this.setState({ items: [...items, `item${items.length + 1}`] });
-    });
-
-    this.$target.querySelectorAll('.removeBtn').forEach(removeBtn => removeBtn.addEventListener('click', ({ target }) => {
+    this.$target.addEventListener('click', ({ target }) => {
       const items = [...this.$state.items];
-      items.splice(target.dataset.index, 1);
-      this.setState({ items });
-    }));
+
+      if (target.classList.contains('addBtn')) {
+        this.setState({ items: [...items, `item${items.length + 1}`] });
+      }
+
+      if (target.classList.contains('removeBtn')) {
+        items.splice(target.dataset.index, 1);
+        this.setState({ items });
+      }
+    })
   }
 }
